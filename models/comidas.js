@@ -1,17 +1,17 @@
 import Sequelize from "sequelize";
 import db from "../configuracion/db.js";
 
-export const celulaMaligna = db.define('celulasmalignas', {
-    id_celula: {
+export const Comida = db.define('comidas', {
+    id_comida: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    nombreCelula: {
+    nombreComida: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    rangoLetalidad: {
-        type: Sequelize.STRING,
+    fecha: {
+        type: Sequelize.DATEONLY,
         allowNull: false
     }})

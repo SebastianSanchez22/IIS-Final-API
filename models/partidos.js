@@ -1,17 +1,13 @@
 import Sequelize from "sequelize";
 import db from "../configuracion/db.js";
 
-export const celulaMaligna = db.define('celulasmalignas', {
-    id_celula: {
+export const Partido = db.define('partidos', {
+    id_partido: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    nombreCelula: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    rangoLetalidad: {
+    nombrePartido: {
         type: Sequelize.STRING,
         allowNull: false
     }})

@@ -1,11 +1,16 @@
 import Sequelize from "sequelize";
 import db from "../configuracion/db.js";
+import { celulaMaligna } from "./celulasMalignas.js";
 
 export const Monstruo = db.define('Monstruos', {
     id_monstruo: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
+    },
+    id_celula: {
+        type: Sequelize.INTEGER,
+        primaryKey: true
     },
     nombreMonstruo: {
         type: Sequelize.STRING,
@@ -14,4 +19,8 @@ export const Monstruo = db.define('Monstruos', {
     nivelAmenaza: {
         type: Sequelize.STRING,
         allowNull: false
-    }})
+    }
+    })
+
+    celulaMaligna.hasOne(Monstruo);
+    Monstruo.belongsTo(celulaMaligna);
