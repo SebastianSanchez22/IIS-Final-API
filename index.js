@@ -18,6 +18,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use('/', router);
+app.use('/batallas', router);
+app.use('/celulasmalignas', router);
+app.use('/comidas', router);
+app.use('/heroes', router);
+app.use('/monstruos', router);
+app.use('/partidos', router);
+app.use('/patrocinadores', router);
+app.use('/videojuegos', router);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

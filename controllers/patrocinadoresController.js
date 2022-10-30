@@ -1,4 +1,6 @@
 import { Patrocinador } from "../models/patrocinadores.js";
+import { Patrocinador_Heroe } from "../models/patrocinadores_Heroes.js";
+import { Patrocinador_Monstruo } from "../models/patrocinadores_Monstruos.js";
 
 // GET
 const encontrar_Patrocinadores = async (req, res) => {
@@ -35,6 +37,34 @@ const guardar_Patrocinador = async (req, res) => {
     }
 };
 
+// POST
+const guardar_Patrocinio_Heroe = async (req, res) => {
+    const {id_patrocinador, id_heroe} = req.body;
+    try {
+        const nuevoPatrocinio = await Patrocinador_Heroe.create({
+            id_patrocinador,
+            id_heroe
+        });
+        res.json(nuevoPatrocinio);
+    } catch (error){
+        console.log(error);
+    }
+};
+
+// POST
+const guardar_Patrocinio_Monstruo = async (req, res) => {
+    const {id_patrocinador, id_monstruo} = req.body;
+    try {
+        const nuevoPatrocinio = await Patrocinador_Monstruo.create({
+            id_patrocinador,
+            id_monstruo
+        });
+        res.json(nuevoPatrocinio);
+    } catch (error){
+        console.log(error);
+    }
+};
+
 // DELETE
 const eliminar_Patrocinador = async (req, res) => {
     try {
@@ -51,4 +81,5 @@ const eliminar_Patrocinador = async (req, res) => {
     }
 };
 
-export { encontrar_Patrocinadores, guardar_Patrocinador, eliminar_Patrocinador};
+export { encontrar_Patrocinadores, guardar_Patrocinador, 
+    guardar_Patrocinio_Heroe, guardar_Patrocinio_Monstruo, eliminar_Patrocinador};
