@@ -1,3 +1,4 @@
+import db from "../configuracion/db.js";
 import { Batalla } from "../models/batallas.js";
 
 // GET 
@@ -15,10 +16,9 @@ const guardar_Batalla = async (req, res) => {
     //const {id_heroe, id_monstruo} = req.body.datosBatalla;
     const {id_heroe, id_monstruo} = req.body;
 
-    const existeBatalla = await Batalla.findOne(({ where: { id_heroe : id_heroe,
-        id_monstruo: id_monstruo } }));
+    const [existeBatalla, metadata] = await db.query(`SELECT * FROM Batallas WHERE id_heroe = ${id_heroe} AND id_monstruo = ${id_monstruo}`)
 
-    if (existeBatalla){
+    if (existeBatalla[0]){
         const error = new Error("La batalla que se quiere ingresar ya existe");
         return res.status(400).json({msg: error.message});
     }

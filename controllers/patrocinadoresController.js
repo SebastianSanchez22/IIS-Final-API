@@ -81,5 +81,37 @@ const eliminar_Patrocinador = async (req, res) => {
     }
 };
 
-export { encontrar_Patrocinadores, guardar_Patrocinador, 
-    guardar_Patrocinio_Heroe, guardar_Patrocinio_Monstruo, eliminar_Patrocinador};
+// DELETE
+const eliminar_Patrocinio_Heroe = async (req, res) => {
+    try {
+        const { id_patrocinio } = req.params;
+        await Patrocinador_Heroe.destroy({
+            where:{
+                id_patrocinio,
+            },
+        });
+        res.json({mensaje: 'El patrocinio ' + id_patrocinio+ ' se elimino con exito'})
+        res.sendStatus(204);
+    } catch (error) {
+        return res.status(500).json({mensaje: 'Para eliminar un patrocinio, el patrocinio debe existir. Revise el id, por favor'});
+    }
+};
+
+// DELETE
+const eliminar_Patrocinio_Monstruo = async (req, res) => {
+    try {
+        const { id_patrocinio } = req.params;
+        await Patrocinador_Monstruo.destroy({
+            where:{
+                id_patrocinio,
+            },
+        });
+        res.json({mensaje: 'El patrocinio ' + id_patrocinio+ ' se elimino con exito'})
+        res.sendStatus(204);
+    } catch (error) {
+        return res.status(500).json({mensaje: 'Para eliminar un patrocinio, el patrocinio debe existir. Revise el id, por favor'});
+    }
+};
+
+export { encontrar_Patrocinadores, guardar_Patrocinador, guardar_Patrocinio_Heroe, guardar_Patrocinio_Monstruo,
+     eliminar_Patrocinador, eliminar_Patrocinio_Heroe, eliminar_Patrocinio_Monstruo};

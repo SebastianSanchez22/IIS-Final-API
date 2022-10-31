@@ -4,6 +4,11 @@ import { Heroe } from "./heroes.js";
 import { Patrocinador } from "./patrocinadores.js";
 
 export const Patrocinador_Heroe = db.define('patrocinadores_heroes', {
+    id_patrocinio: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     id_patrocinador: {
         type: Sequelize.INTEGER,
         primaryKey: true

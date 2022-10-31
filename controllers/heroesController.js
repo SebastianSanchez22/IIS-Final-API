@@ -1,3 +1,4 @@
+import db from "../configuracion/db.js";
 import { Heroe } from "../models/heroes.js";
 
 //GET
@@ -5,6 +6,17 @@ const encontrar_Heroes = async (req, res) => {
     try{
         const heroes = await Heroe.findAll();
         res.json(heroes)
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+}
+
+// GET
+const top10Heroes = async (req, res) => {
+    try {
+        // COMPLETAR
+        const top10 = await db.query("SELECT * FROM heroes")
+        res.json(top10)
     } catch (error) {
         return res.status(500).json({message: error.message});
     }
@@ -39,7 +51,7 @@ const guardar_Heroe = async (req, res) => {
     }
 };
 
-// UPDATE
+// UPDATE (PATCH)
 const actualizar_Heroe = async (req, res) => {
     const {id_heroe} = req.params;
     //const {invitadoSaitama} = req.body.actualizarInvitacion;
@@ -53,7 +65,9 @@ const actualizar_Heroe = async (req, res) => {
         {
             where: {id_heroe: id_heroe}
         });
-        res.json(actualizacion);
+        actualizacion;
+        const heroeActualizado = await db.query(`SELECT * FROM heroes WHERE id_heroe = ${id_heroe}`)
+        res.json(heroeActualizado);
 
     } catch (error) {
         console.log(error);
@@ -76,4 +90,4 @@ const eliminar_Heroe = async (req, res) => {
     }
 };
 
-export { encontrar_Heroes, guardar_Heroe, actualizar_Heroe, eliminar_Heroe};
+export { encontrar_Heroes, top10Heroes, guardar_Heroe, actualizar_Heroe, eliminar_Heroe};

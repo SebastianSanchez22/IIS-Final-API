@@ -22,5 +22,5 @@ export const Monstruo = db.define('Monstruos', {
     }
     })
 
-    celulaMaligna.hasOne(Monstruo);
-    Monstruo.belongsTo(celulaMaligna);
+celulaMaligna.hasOne(Monstruo);
+Monstruo.belongsTo(celulaMaligna, {foreignKey: "id_celula"} );

@@ -24,7 +24,7 @@ export const Heroe = db.define('Heroes', {
         allowNull: false,
     },
     telefono: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
         allowNull: false,
     },
     invitadoSaitama: {
