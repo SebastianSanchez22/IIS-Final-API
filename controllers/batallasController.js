@@ -4,7 +4,7 @@ import { Batalla } from "../models/batallas.js";
 // GET 
 const encontrar_Batallas = async (req, res) => {
     try{
-        const Batallas = await Batallas.findAll();
+        const [Batallas, metadata] = await db.query("SELECT * FROM batallas")
         res.json(Batallas)
     } catch (error) {
         return res.status(500).json({message: error.message});

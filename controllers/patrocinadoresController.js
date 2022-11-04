@@ -1,3 +1,4 @@
+import db from "../configuracion/db.js";
 import { Patrocinador } from "../models/patrocinadores.js";
 import { Patrocinador_Heroe } from "../models/patrocinadores_Heroes.js";
 import { Patrocinador_Monstruo } from "../models/patrocinadores_Monstruos.js";
@@ -7,6 +8,22 @@ const encontrar_Patrocinadores = async (req, res) => {
     try{
         const Patrocinadores = await Patrocinador.findAll();
         res.json(Patrocinadores)
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+}
+
+// GET
+const encontrar_Patrocinadores_Heroe = async (req, res) => {
+    try{
+        const  { id_heroe } = req.params;
+        const [checkHeroe, metadata2] = await db.query(`SELECT nombreHeroe FROM Heroes WHERE id_heroe = ${id_heroe}`);
+        if(!checkHeroe[0]){
+            res.json({mensaje: `El heroe con id_heroe = ${id_heroe} no existe`})
+        } else {
+            const [Patrocinadores, metadata] = await db.query(`SELECT id_patrocinador FROM Patrocinadores_Heroes WHERE id_heroe = ${id_heroe}`);
+            res.json(Patrocinadores)
+        } 
     } catch (error) {
         return res.status(500).json({message: error.message});
     }
@@ -113,5 +130,5 @@ const eliminar_Patrocinio_Monstruo = async (req, res) => {
     }
 };
 
-export { encontrar_Patrocinadores, guardar_Patrocinador, guardar_Patrocinio_Heroe, guardar_Patrocinio_Monstruo,
-     eliminar_Patrocinador, eliminar_Patrocinio_Heroe, eliminar_Patrocinio_Monstruo};
+export { encontrar_Patrocinadores, encontrar_Patrocinadores_Heroe, guardar_Patrocinador, guardar_Patrocinio_Heroe,
+     guardar_Patrocinio_Monstruo, eliminar_Patrocinador, eliminar_Patrocinio_Heroe, eliminar_Patrocinio_Monstruo};

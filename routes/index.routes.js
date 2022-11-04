@@ -6,7 +6,7 @@ import { encontrar_Comidas, guardar_Comida, eliminar_Comida } from '../controlle
 import { encontrar_Heroes, top10Heroes, guardar_Heroe, actualizar_Heroe, eliminar_Heroe } from '../controllers/heroesController.js';
 import { encontrar_Monstruos, guardar_Monstruo, eliminar_Monstruo } from '../controllers/monstruosController.js';
 import { encontrar_Partidos, guardar_Partido, eliminar_Partido } from '../controllers/partidosController.js';
-import { encontrar_Patrocinadores, guardar_Patrocinador, guardar_Patrocinio_Heroe, guardar_Patrocinio_Monstruo, eliminar_Patrocinador,
+import { encontrar_Patrocinadores, encontrar_Patrocinadores_Heroe, guardar_Patrocinador, guardar_Patrocinio_Heroe, guardar_Patrocinio_Monstruo, eliminar_Patrocinador,
       eliminar_Patrocinio_Heroe, eliminar_Patrocinio_Monstruo } from '../controllers/patrocinadoresController.js';
 import { encontrar_Videojuegos, guardar_Videojuego, eliminar_Videojuego } from '../controllers/videojuegosController.js';
 
@@ -19,6 +19,7 @@ router.get('/heroes', encontrar_Heroes);
 router.get('/monstruos', encontrar_Monstruos);
 router.get('/partidos', encontrar_Partidos);
 router.get('/patrocinadores', encontrar_Patrocinadores);
+router.get('/patrocinadores/patrocinio_Heroe/:id_heroe', encontrar_Patrocinadores_Heroe);
 router.get('/videojuegos', encontrar_Videojuegos);
 
 router.get('/top10', top10Heroes)

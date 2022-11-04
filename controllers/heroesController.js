@@ -4,7 +4,7 @@ import { Heroe } from "../models/heroes.js";
 //GET
 const encontrar_Heroes = async (req, res) => {
     try{
-        const heroes = await Heroe.findAll();
+        const [heroes, metadata] = await db.query("SELECT * FROM heroes");
         res.json(heroes)
     } catch (error) {
         return res.status(500).json({message: error.message});
@@ -15,8 +15,22 @@ const encontrar_Heroes = async (req, res) => {
 const top10Heroes = async (req, res) => {
     try {
         // COMPLETAR
-        const top10 = await db.query("SELECT * FROM heroes")
-        res.json(top10)
+        const [topS, metadata]= await db.query("SELECT * FROM heroes WHERE rango = 'S' LIMIT 10");
+        if(topS.length == 10){
+            res.json(topS)
+        } else {
+            const newLimit = 10 - topS.length;
+            const [topA, metadata2] = await db.query(`SELECT * FROM heroes WHERE rango = 'A' LIMIT ${newLimit}`);
+            if((topS.length + topA.length) == 10){
+                res.json({topS, topA});
+            } else {
+                const newLimit2 = 10 - (topS.length - topA.length);
+                const [topB, metadata3] = await db.query(`SELECT * FROM heroes WHERE rango = 'B' LIMIT ${newLimit2}`);
+                if((topS.length+(topA.length+topB.length)) == 10){
+                    res.json({topS, topA, topB});
+                }
+            }
+        }
     } catch (error) {
         return res.status(500).json({message: error.message});
     }
