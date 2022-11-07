@@ -16,7 +16,7 @@ const retornar_Datos_Heroe = async (req, res) => {
     try {
         const { id_heroe } = req.params;
         const [datosHeroe, metadata] = await db.query(`SELECT nombreHeroe,rango,habilidad,lugarResidencia,telefono FROM heroes WHERE heroes.id_heroe = ${id_heroe}`);
-        const [datosBatalla_Heroe, metadata2] = await db.query(`SELECT M.nombreMonstruo,b.resultado FROM monstruos m INNER JOIN batallas b ON m.id_monstruo=b.id_monstruo WHERE b.id_heroe=${id_heroe}`);
+        const [datosBatalla_Heroe, metadata2] = await db.query(`SELECT m.nombreMonstruo,b.resultado FROM monstruos m INNER JOIN batallas b ON m.id_monstruo=b.id_monstruo WHERE b.id_heroe=${id_heroe}`);
         const [datosPatrocinador_Heroe, metadata3] = await db.query(`SELECT p.nombrePatrocinador FROM patrocinadores p INNER JOIN patrocinadores_heroes h ON p.id_patrocinador=h.id_patrocinador WHERE h.id_heroe=${id_heroe}`);
         const totalInfoHeroe = datosHeroe.concat(datosBatalla_Heroe,datosPatrocinador_Heroe);
         res.json(totalInfoHeroe);

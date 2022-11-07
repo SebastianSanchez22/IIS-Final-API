@@ -17,7 +17,7 @@ const retornar_Datos_Monstruo = async (req, res) => {
     try {
         const  {id_monstruo} = req.params;
         const [datosMonstruo, metadata] = await db.query(`SELECT nombreMonstruo,nivelAmenaza FROM monstruos WHERE id_monstruo = ${id_monstruo}`);
-        const [datosBatalla_Monstruo, metadata2] = await db.query(`SELECT h.nombreHeroe,b.resultado FROM heroes h INNER JOIN batallas b ON h.id_heroe=h.id_heroe WHERE id_monstruo=${id_monstruo}`);
+        const [datosBatalla_Monstruo, metadata2] = await db.query(`SELECT h.nombreHeroe,b.resultado FROM heroes h INNER JOIN batallas b ON b.id_heroe=h.id_heroe WHERE id_monstruo=${id_monstruo}`);
         const totalInfoMonstruo = datosMonstruo.concat(datosBatalla_Monstruo);
         res.json(totalInfoMonstruo);
     } catch (error) {
