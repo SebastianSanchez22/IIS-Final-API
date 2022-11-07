@@ -1,7 +1,7 @@
 import Sequelize from "sequelize";
 
-const db = new Sequelize( 'finalapi', 'root', 'root', {
-    host: '127.0.0.1',
+const db = new Sequelize( 'finalapi', 'root', 'SSJPM', {
+    host: '34.67.97.23',
     port: '3306',
     dialect: 'mysql',
     define: {
