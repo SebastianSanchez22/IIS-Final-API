@@ -27,6 +27,8 @@ app.use('/partidos', router);
 app.use('/patrocinadores', router);
 app.use('/videojuegos', router);
 app.use('/top10', router);
+app.use('/datosHeroe', router);
+app.use('/invitadosCasa', router);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

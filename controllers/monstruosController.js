@@ -12,6 +12,19 @@ const encontrar_Monstruos = async (req, res) => {
     }
 }
 
+// GET
+const retornar_Datos_Monstruo = async (req, res) => {
+    try {
+        const  {id_monstruo} = req.params;
+        const [datosMonstruo, metadata] = await db.query(`SELECT nombreMonstruo,nivelAmenaza FROM monstruos WHERE id_monstruo = ${id_monstruo}`);
+        const [datosBatalla_Monstruo, metadata2] = await db.query(`SELECT h.nombreHeroe,b.resultado FROM heroes h INNER JOIN batallas b ON h.id_heroe=h.id_heroe WHERE id_monstruo=${id_monstruo}`);
+        const totalInfoMonstruo = datosMonstruo.concat(datosBatalla_Monstruo);
+        res.json(totalInfoMonstruo);
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+}
+
 // POST
 const guardar_Monstruo = async (req, res) => {
     //const {id_celula, nombreMonstruo, nivelAmenaza} = req.body.datosMonstruo;
@@ -58,4 +71,4 @@ const eliminar_Monstruo = async (req, res) => {
     }
 };
 
-export { encontrar_Monstruos, guardar_Monstruo, eliminar_Monstruo};
+export { encontrar_Monstruos, retornar_Datos_Monstruo, guardar_Monstruo, eliminar_Monstruo};

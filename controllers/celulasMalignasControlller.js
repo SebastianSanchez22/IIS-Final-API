@@ -1,3 +1,4 @@
+import db from "../configuracion/db.js";
 import { celulaMaligna } from "../models/celulasMalignas.js";
 
 // GET
@@ -5,6 +6,19 @@ const encontrar_Celulas_Malignas = async (req, res) => {
     try{
         const celulasMalignas = await celulaMaligna.findAll();
         res.json(celulasMalignas)
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+}
+
+// GET
+const retornar_Datos_Celula_Maligna = async (req,res) => {
+    try {
+        const  {id_celula} = req.params;
+        const [datosCelula, metadata] = await db.query(`SELECT nombreCelula, rangoLetalidad from celulasmalignas WHERE id_celula = ${id_celula}`);
+        const [celulaMonstruo, metadata2] = await db.query(`SELECT M.nombreMonstruo FROM monstruos m INNER JOIN celulasmalignas c ON m.id_celula=c.id_celula WHERE m.id_celula=${id_celula}`); 
+        const totalInfoMonstruo = datosCelula.concat(celulaMonstruo);
+        res.json(totalInfoMonstruo);
     } catch (error) {
         return res.status(500).json({message: error.message});
     }
@@ -52,4 +66,4 @@ const eliminar_Celula_Maligna = async (req, res) => {
     }
 };
 
-export { encontrar_Celulas_Malignas, guardar_Celula_Maligna, eliminar_Celula_Maligna};
+export { encontrar_Celulas_Malignas, retornar_Datos_Celula_Maligna, guardar_Celula_Maligna, eliminar_Celula_Maligna};

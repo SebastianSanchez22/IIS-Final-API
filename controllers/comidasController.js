@@ -45,7 +45,7 @@ const eliminar_Comida = async (req, res) => {
         res.json({mensaje: 'La comida ' +id_comida+ ' se elimino con exito'})
         res.sendStatus(204);
     } catch (error) {
-        return res.status(500).json({mensaje: 'Para eliminar una cmida, la comidadebe existir. Revise el id, por favor'});
+        return res.status(500).json({mensaje: 'Para eliminar una comida, la comida debe existir. Revise el id, por favor'});
     }
 };
 

@@ -11,29 +11,62 @@ const encontrar_Heroes = async (req, res) => {
     }
 }
 
+//GET
+const retornar_Datos_Heroe = async (req, res) => {
+    try {
+        const { id_heroe } = req.params;
+        const [datosHeroe, metadata] = await db.query(`SELECT nombreHeroe,rango,habilidad,lugarResidencia,telefono FROM heroes WHERE heroes.id_heroe = ${id_heroe}`);
+        const [datosBatalla_Heroe, metadata2] = await db.query(`SELECT M.nombreMonstruo,b.resultado FROM monstruos m INNER JOIN batallas b ON m.id_monstruo=b.id_monstruo WHERE b.id_heroe=${id_heroe}`);
+        const [datosPatrocinador_Heroe, metadata3] = await db.query(`SELECT p.nombrePatrocinador FROM patrocinadores p INNER JOIN patrocinadores_heroes h ON p.id_patrocinador=h.id_patrocinador WHERE h.id_heroe=${id_heroe}`);
+        const totalInfoHeroe = datosHeroe.concat(datosBatalla_Heroe,datosPatrocinador_Heroe);
+        res.json(totalInfoHeroe);
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+}
+
 // GET
 const top10Heroes = async (req, res) => {
     try {
         // COMPLETAR
         const [topS, metadata]= await db.query("SELECT * FROM heroes WHERE rango = 'S' LIMIT 10");
-        if(topS.length == 10){
-            res.json(topS)
+        let top10 = topS;
+        if(top10.length == 10){
+            res.json(top10);
         } else {
             const newLimit = 10 - topS.length;
             const [topA, metadata2] = await db.query(`SELECT * FROM heroes WHERE rango = 'A' LIMIT ${newLimit}`);
-            if((topS.length + topA.length) == 10){
-                res.json({topS, topA});
+            top10 = topS.concat(topA);
+            if(top10.length == 10){
+                res.json(top10);
             } else {
                 const newLimit2 = 10 - (topS.length - topA.length);
                 const [topB, metadata3] = await db.query(`SELECT * FROM heroes WHERE rango = 'B' LIMIT ${newLimit2}`);
-                if((topS.length+(topA.length+topB.length)) == 10){
-                    res.json({topS, topA, topB});
+                top10 = topS.concat(topA, topB);
+                if(top10.length == 10){
+                    res.json(top10);
+                } else {
+                    const newLimit3 = 10 - (topS.length - (topA.length- topB.length));
+                    const [topC, metadata3] = await db.query(`SELECT * FROM heroes WHERE rango = 'C' LIMIT ${newLimit3}`);
+                    top10 = topS.concat(topA, topB, topC);
+                    res.json(top10);
                 }
             }
         }
     } catch (error) {
         return res.status(500).json({message: error.message});
     }
+}
+
+// GET
+const invitadosCasaSaitama = async (req,res) => {
+    try{
+        const [invitados, metadata] = await db.query("SELECT nombreHeroe FROM heroes where invitadoSaitama = 'SI'");
+        res.json(invitados)
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+   
 }
 
 //POST
@@ -104,4 +137,4 @@ const eliminar_Heroe = async (req, res) => {
     }
 };
 
-export { encontrar_Heroes, top10Heroes, guardar_Heroe, actualizar_Heroe, eliminar_Heroe};
+export { encontrar_Heroes, retornar_Datos_Heroe, top10Heroes, invitadosCasaSaitama, guardar_Heroe, actualizar_Heroe, eliminar_Heroe};
