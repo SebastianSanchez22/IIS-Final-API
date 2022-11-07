@@ -16,7 +16,7 @@ const retornar_Datos_Celula_Maligna = async (req,res) => {
     try {
         const  {id_celula} = req.params;
         const [datosCelula, metadata] = await db.query(`SELECT nombreCelula, rangoLetalidad from celulasmalignas WHERE id_celula = ${id_celula}`);
-        const [celulaMonstruo, metadata2] = await db.query(`SELECT M.nombreMonstruo FROM monstruos m INNER JOIN celulasmalignas c ON m.id_celula=c.id_celula WHERE m.id_celula=${id_celula}`); 
+        const [celulaMonstruo, metadata2] = await db.query(`SELECT m.nombreMonstruo FROM monstruos m INNER JOIN celulasmalignas c ON m.id_celula=c.id_celula WHERE m.id_celula=${id_celula}`); 
         const totalInfoMonstruo = datosCelula.concat(celulaMonstruo);
         res.json(totalInfoMonstruo);
     } catch (error) {

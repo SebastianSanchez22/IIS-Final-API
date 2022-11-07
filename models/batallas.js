@@ -3,7 +3,7 @@ import db from "../configuracion/db.js";
 import { Heroe } from "./heroes.js";
 import { Monstruo } from "./monstruos.js";
 
-export const Batalla = db.define('Batallas', {
+export const Batalla = db.define('batallas', {
     id_heroe: {
         type: Sequelize.INTEGER,
         primaryKey: true
